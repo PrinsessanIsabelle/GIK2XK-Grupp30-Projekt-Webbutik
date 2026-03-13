@@ -1,0 +1,1 @@
+/* Allt gällande ratings */

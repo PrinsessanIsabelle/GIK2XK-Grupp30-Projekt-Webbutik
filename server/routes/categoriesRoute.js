@@ -1,0 +1,1 @@
+/*   Här ahr vi getAll categories , create/update/delete*/
