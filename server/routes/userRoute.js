@@ -1,1 +1,0 @@
-/*  Här har vi registrering, login och info om användaren */

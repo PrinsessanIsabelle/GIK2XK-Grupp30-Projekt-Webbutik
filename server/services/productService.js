@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const db = require('../models');
 const {
   createResponseSuccess,
@@ -207,6 +206,3 @@ module.exports = {
   update,
   destroy
 };
-=======
-/* Allt gällande products och categories*/
->>>>>>> b6da9ab0da38621e80b4c14a1a7cb14d00ec4c9f

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const router = require('express').Router();
 const productService = require('../services/postService');
 
@@ -49,6 +48,3 @@ router.delete('/', (req, res) => {
 });
 
 module.exports = router;
-=======
-/*   Här ahr vi getAll products, getProductById, create/update/delete*/
->>>>>>> b6da9ab0da38621e80b4c14a1a7cb14d00ec4c9f
