@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'postTag', {
+    'underCategory', {
         id:{ 
                 type: DataTypes.INTEGER,
                 primaryKey: true,

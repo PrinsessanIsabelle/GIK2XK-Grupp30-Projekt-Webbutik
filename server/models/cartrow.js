@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'postTag', 
+    'cartrow', 
     {
         id:{ 
                 type: DataTypes.INTEGER,
