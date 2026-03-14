@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const router = require('express').Router();
 const db = require('../models');
 const productService = require('../services/productService.js');
@@ -34,3 +35,6 @@ router.delete('/', (req, res) => {
 });
 
 module.exports = router;
+=======
+/*   Här ahr vi getAll categories , create/update/delete*/
+>>>>>>> b6da9ab0da38621e80b4c14a1a7cb14d00ec4c9f

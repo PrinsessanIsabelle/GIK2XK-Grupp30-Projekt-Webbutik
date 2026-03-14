@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 autoIncrement: true
             },
-            title:{
+            productName:{
                 type: DataTypes.STRING(100),
                 allowNull: false,
                 validate: {
