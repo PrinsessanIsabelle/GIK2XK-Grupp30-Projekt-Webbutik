@@ -1,1 +1,1 @@
-/*   Get cart, create cart, mark as paid*/
+// Kanske inte behöver denna. Viktigast med productsRoute

@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const productService = require('../services/postService');
+// const productService = require('../services/productService');
+const db = require('../models');
 
 router.post('/:id/addRating', (req, res) => {
   const rating = req.body;
@@ -18,10 +19,14 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.get('/', (req, res) => {
-  productService.getAll().then((result) => {
-    res.status(result.status).json(result.data);
-  });
+router.get('/', async (req, res) => {
+db.product.findAll( ).then((result) => {
+  res.status(200).json(result);
+});
+  // productService.getAll().then((result) => {
+    
+   // res.status(result.status).json(result.data);
+  // });
 });
 
 router.post('/', (req, res) => {

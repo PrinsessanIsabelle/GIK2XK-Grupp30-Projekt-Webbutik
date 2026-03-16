@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true
             },
         payed:{
-            type: DataTypes.BOOL,
+            type: DataTypes.BOOLEAN,
             allowNull: false
         }
 

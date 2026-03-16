@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'underCategory', {
+    'productCategory', {
         id:{ 
                 type: DataTypes.INTEGER,
                 primaryKey: true,
