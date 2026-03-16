@@ -1,3 +1,7 @@
+// Denna fil heter OLD för att målet är att ersätta den med en ny version,
+// som är mer relevant för webbutik. Lätt att klippa ut och klistra in i den nya från denna.
+// = Tips från Mikaela 
+
 const db = require('../models');
 const {
   createResponseSuccess,
