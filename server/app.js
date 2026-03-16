@@ -1,5 +1,6 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var logger = require('morgan');
 
 
@@ -10,8 +11,22 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET || 'dev-session-secret-change-me',
+		resave: false,
+		saveUninitialized: false,
+		cookie: {
+			httpOnly: true,
+			sameSite: 'lax',
+			secure: false
+		}
+	})
+);
 
 app.use('/products', require('./routes/productsRoute'));
+app.use('/auth', require('./routes/authRoute'));
+app.use('/users', require('./routes/usersRoute'));
 
 
 module.exports = app;

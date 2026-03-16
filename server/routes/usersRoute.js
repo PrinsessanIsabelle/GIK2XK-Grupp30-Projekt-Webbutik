@@ -1,42 +1,6 @@
 const router = require('express').Router();
 const db = require('../models');
-const validate = require('validate.js');
-const productService = require('../services/productService.js');
-
-const constraints = {
-  email: {
-    length: {
-      minimum: 4,
-      maximum: 200,
-      tooShort: '^E-postadressen måste vara minst %{count} tecken lång.',
-      tooLong: '^E-postadressen får inte vara längre än %{count} tecken lång.'
-    },
-    email: {
-      message: '^E-postadressen är i ett felaktigt format.'
-    }
-  },
-  username: {
-    length: {
-      minimum: 3,
-      maximum: 50,
-      tooShort: '^Användarnamnet måste vara minst %{count} tecken långt.',
-      tooLong: '^Användarnamnet får inte vara längre än %{count} tecken långt.'
-    }
-  },
-  imageUrl: {
-    url: {
-      message: '^Sökvägen är felaktig.'
-    }
-  }
-};
-
-router.get('/:id/products', (req, res) => {
-  const id = req.params.id;
-
-  productService.getByAuthor(id).then((result) => {
-    res.status(result.status).json(result.data);
-  });
-});
+const { hashPassword } = require('../helpers/passwordHelper');
 
 router.get('/', (req, res) => {
   db.user.findAll().then((result) => {
@@ -44,32 +8,53 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const user = req.body;
-  const invalidData = validate(user, constraints);
-  if (invalidData) {
-    res.status(400).json(invalidData);
-  } else {
-    db.user.create(user).then((result) => {
-      res.send(result);
+
+  if (!user.email || !user.username) {
+    return res.status(422).json({ error: 'email och username är obligatoriska.' });
+  }
+  if (!user.password || user.password.length < 6) {
+    return res.status(422).json({ error: 'password är obligatoriskt och minst 6 tecken.' });
+  }
+
+  try {
+    const passwordHash = await hashPassword(user.password);
+    const { password, ...safeUserData } = user;
+    const createdUser = await db.user.create({
+      ...safeUserData,
+      passwordHash
     });
+    return res.status(201).json(createdUser);
+  } catch (error) {
+    return res.status(500).json({ error: error.message || 'Okänt fel' });
   }
 });
 
-router.put('/', (req, res) => {
+router.put('/', async (req, res) => {
   const user = req.body;
-  const invalidData = validate(user, constraints);
   const id = user.id;
-  if (invalidData || !id) {
-    res.status(400).json(invalidData || 'Id är obligatoriskt.');
-  } else {
-    db.user
-      .update(user, {
-        where: { id: user.id }
-      })
-      .then((result) => {
-        res.send('Produkten har uppdaterats.');
-      });
+
+  if (!id) {
+    return res.status(422).json({ error: 'Id är obligatoriskt.' });
+  }
+
+  try {
+    const updatePayload = { ...user };
+    if (updatePayload.password !== undefined) {
+      if (!updatePayload.password || updatePayload.password.length < 6) {
+        return res.status(422).json({ error: 'password måste vara minst 6 tecken.' });
+      }
+      updatePayload.passwordHash = await hashPassword(updatePayload.password);
+      delete updatePayload.password;
+    }
+
+    await db.user.update(updatePayload, {
+      where: { id: user.id }
+    });
+    return res.status(200).send('Användaren har uppdaterats.');
+  } catch (error) {
+    return res.status(500).json({ error: error.message || 'Okänt fel' });
   }
 });
 router.delete('/', (req, res) => {
@@ -78,7 +63,7 @@ router.delete('/', (req, res) => {
       where: { id: req.body.id }
     })
     .then(() => {
-      res.json(`Produkten raderades`);
+      res.json('Användaren raderades');
     });
 });
 

@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
             firstName:  DataTypes.STRING(100),
             lastName: DataTypes.STRING(50),
             description: DataTypes.TEXT,
+            passwordHash: {
+                type: DataTypes.STRING(255),
+                allowNull: true,
+                field: 'password_hash'
+            },
             imageUrl: {
                 type: DataTypes.STRING(255),
                 validate: {
@@ -32,6 +37,11 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
-        {underscored: true}
+        {
+            underscored: true,
+            defaultScope: {
+                attributes: { exclude: ['passwordHash'] }
+            }
+        }
     );
 }; 
