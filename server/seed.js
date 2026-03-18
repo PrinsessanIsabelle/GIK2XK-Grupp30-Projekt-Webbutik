@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Denna fil - seed.js är nödvändig för att executera sql-filer
-// eftersom sql-filer i sig själva bara är textfiler som inte kan executeras automatiskt.
-// Vid problem med CLI är detta ett alternativ. (run seed.js i terminalen).
+// Denna fil - seed.js är nödvändig för att exekvera sql-filer
+// eftersom sql-filer i sig själva bara är textfiler som inte kan exekveras automatiskt.
+// Vid problem med CLI-path är detta ett alternativ. (run seed.js i terminalen).
 
 const fs = require('fs');
 const path = require('path');
