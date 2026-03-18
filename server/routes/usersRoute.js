@@ -1,70 +1,34 @@
 const router = require('express').Router();
-const db = require('../models');
-const { hashPassword } = require('../helpers/passwordHelper');
+const userService = require('../services/userService');
 
-router.get('/', (req, res) => {
-  db.user.findAll().then((result) => {
-    res.send(result);
-  });
+router.get('/', async (req, res) => {
+  const result = await userService.getAll();
+  res.status(result.status).json(result.data);
+});
+
+router.get('/:id', async (req, res) => {
+  const result = await userService.getById(req.params.id);
+  res.status(result.status).json(result.data);
+});
+
+router.get('/:id/ratings', async (req, res) => {
+  const result = await userService.getUserWithRatings(req.params.id);
+  res.status(result.status).json(result.data);
 });
 
 router.post('/', async (req, res) => {
-  const user = req.body;
-
-  if (!user.email || !user.username) {
-    return res.status(422).json({ error: 'email och username är obligatoriska.' });
-  }
-  if (!user.password || user.password.length < 6) {
-    return res.status(422).json({ error: 'password är obligatoriskt och minst 6 tecken.' });
-  }
-
-  try {
-    const passwordHash = await hashPassword(user.password);
-    const { password, ...safeUserData } = user;
-    const createdUser = await db.user.create({
-      ...safeUserData,
-      passwordHash
-    });
-    return res.status(201).json(createdUser);
-  } catch (error) {
-    return res.status(500).json({ error: error.message || 'Okänt fel' });
-  }
+  const result = await userService.create(req.body);
+  res.status(result.status).json(result.data);
 });
 
-router.put('/', async (req, res) => {
-  const user = req.body;
-  const id = user.id;
-
-  if (!id) {
-    return res.status(422).json({ error: 'Id är obligatoriskt.' });
-  }
-
-  try {
-    const updatePayload = { ...user };
-    if (updatePayload.password !== undefined) {
-      if (!updatePayload.password || updatePayload.password.length < 6) {
-        return res.status(422).json({ error: 'password måste vara minst 6 tecken.' });
-      }
-      updatePayload.passwordHash = await hashPassword(updatePayload.password);
-      delete updatePayload.password;
-    }
-
-    await db.user.update(updatePayload, {
-      where: { id: user.id }
-    });
-    return res.status(200).send('Användaren har uppdaterats.');
-  } catch (error) {
-    return res.status(500).json({ error: error.message || 'Okänt fel' });
-  }
+router.put('/:id', async (req, res) => {
+  const result = await userService.update(req.body, req.params.id);
+  res.status(result.status).json(result.data);
 });
-router.delete('/', (req, res) => {
-  db.user
-    .destroy({
-      where: { id: req.body.id }
-    })
-    .then(() => {
-      res.json('Användaren raderades');
-    });
+
+router.delete('/:id', async (req, res) => {
+  const result = await userService.destroy(req.params.id);
+  res.status(result.status).json(result.data);
 });
 
 module.exports = router;
