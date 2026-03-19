@@ -2,14 +2,16 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import ProductEdit from './views/ProductEdit.jsx'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import Home from './views/Home.jsx'
 import ProductDetail from './views/ProductDetail.jsx'
+import ProductRating from './views/ProductRating.jsx'
+import ProductEdit from './views/ProductEdit.jsx'
 import Cart from './views/Cart.jsx'
 import Login from './views/Login.jsx'
 import SignUp from './views/SignUp.jsx'
 import AccountSettings from './views/AccountSettings.jsx'
+import Payment from './views/Payment.jsx'
 
 const router = createBrowserRouter([
   {path: '/', element: <App />,
@@ -19,21 +21,41 @@ const router = createBrowserRouter([
       element: <Home />
     },
     {
-      path: '/product/new',
+      path: '/products/new',
       element: <ProductEdit />
     },
     {
-      path: '/cart',
-      element: <Cart />
+      path: '/products/:id/edit',
+      element: <ProductEdit />
     },
+    {
+      path: '/products/:id',
+      element: <ProductDetail />
+    },
+   /* {
+      path: '/products/:id/rating/userId',  WTF GÖR VI HÄR?!?!?!? 
+      element: <ProductRating />
+    }, */
     {
       path: '/Login',
       element: <Login />
     },
     {
+      path: '/SignUp',
+      element: <SignUp />
+    },
+    {
       path: '/AccountSettings',
       element: <AccountSettings />
     },
+    {
+      path: '/Cart/:id',
+      element: <Cart />
+    },
+    {
+      path: '/Cart/:id/Payment',
+      element: <Payment />
+    }
   ]
   }
 ])

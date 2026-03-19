@@ -160,4 +160,20 @@ ON DUPLICATE KEY UPDATE
 	category_id = VALUES(category_id),
 	updated_at = VALUES(updated_at);
 
+
+INSERT INTO ratings (user_id, product_id, rating, body, created_at, updated_at) VALUES
+(1, 1001, 5, 'Fantastiskt te, väldigt aromatiskt!', NOW(), NOW()),
+(1, 1002, 4, 'Uppfriskande och god citronsmak.', NOW(), NOW()),
+(1, 1003, 3, 'Bra energidryck men lite för söt.', NOW(), NOW()),
+(1, 1004, 5, 'Bästa cold brew jag testat!', NOW(), NOW()),
+(1, 1005, 4, 'Fräsch apelsinjuice utan tillsatt socker.', NOW(), NOW()),
+(1, 1006, 3, 'Helt okej vatten, inget speciellt.', NOW(), NOW()),
+(1, 1007, 5, 'Perfekt pepparmints te för kvällen.', NOW(), NOW()),
+(1, 1008, 4, 'God cola utan socker, rekommenderas!', NOW(), NOW()),
+(1, 1009, 2, 'Mangosmaker känns lite konstlad.', NOW(), NOW()),
+(1, 1010, 5, 'Härlig vanilj latte, precis lagom söt.', NOW(), NOW()),
+(1, 1011, 4, 'Mumsig äppeljuice med bra balans.', NOW(), NOW()),
+(1, 1012, 3, 'Okej mineralvatten men inget wow.', NOW(), NOW());
+
+
 COMMIT;
