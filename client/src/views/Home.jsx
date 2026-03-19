@@ -1,15 +1,14 @@
 import ProductList from '../components/ProductList';
-import { Grid } from '@mui/material';
+import { useParams, useLocation } from 'react-router-dom';
+
 
 function Home() {
+    console.log(useParams(), useLocation());
+    const location = useLocation();
     return (
     <>  
-    <h2>Get fucked up - Drinks CO</h2>
-    <Grid container spacing={2}>
-        <Grid item xs={200} md={100}>          
-            <ProductList />
-        </Grid>
-    </Grid>
+        <h2>Get fucked up - Drinks CO</h2>       
+        <ProductList /*pathname={location.pathname}*//>
     </>
  );
 }
