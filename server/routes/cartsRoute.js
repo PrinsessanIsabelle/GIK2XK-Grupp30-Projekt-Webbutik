@@ -2,6 +2,7 @@
 // Här hanteras alla endpoints relaterade till kundvagnen. 
 
 const router = require('express').Router(); // Routern skapas från Express.
+const db = require('../models'); // Modellerna hämtas in.
 const cartService = require('../services/cartService'); // CartService hämtas in, för att kunna anropa funktioner.
 const { requireAuthenticatedUser } = require('../helpers/authHelper'); // Använder hjälpfunktion för att kräva att användaren är inloggad för att använda dessa endpoints.
 
