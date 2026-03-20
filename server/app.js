@@ -6,6 +6,9 @@ var logger = require('morgan');
 
 
 var app = express();
+const allowedOrigins = [
+	process.env.CLIENT_ORIGIN || 'http://localhost:5173'
+];
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -24,9 +27,17 @@ app.use(
 	})
 );
 app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', '*');
+	const origin = req.headers.origin;
+	if (allowedOrigins.includes(origin)) {
+		res.header('Access-Control-Allow-Origin', origin);
+	}
+	res.header('Vary', 'Origin');
+	res.header('Access-Control-Allow-Credentials', 'true');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 	res.header('Access-Control-Allow-Methods', 'GET, PUT, PATCH, POST, DELETE');
+	if (req.method === 'OPTIONS') {
+		return res.sendStatus(204);
+	}
 	next();
 })
 app.use('/products', require('./routes/productsRoute'));
