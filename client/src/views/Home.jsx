@@ -1,16 +1,21 @@
 import ProductList from '../components/ProductList';
-import { useParams, useLocation } from 'react-router-dom';
-
+import CategoryList from '../components/CategoryList';
+import { useEffect, useState } from 'react';
+import { getAll } from '../services/ProductService';
 
 function Home() {
-    console.log(useParams(), useLocation());
-    const location = useLocation();
+    const [products, setProducts] = useState([]);
+useEffect(() => {
+    getAll().then((response) => {
+        setProducts(response || [])});
+    }, []);
     return (
     <>  
-        <h2>Get fucked up - Drinks CO</h2>       
-        <ProductList /*pathname={location.pathname}*//>
+        <h2>Get fucked up - Drinks CO</h2>     
+        <CategoryList />
+        <ProductList products={products} />
     </>
  );
-}
+};
 
 export default Home;

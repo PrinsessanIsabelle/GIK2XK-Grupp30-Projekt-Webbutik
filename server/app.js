@@ -27,11 +27,13 @@ app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', '*');
 	res.header('Access-Control-Allow-Methods', 'GET, PUT, PATCH, POST, DELETE');
+	if (req.method === 'OPTIONS') return res.sendStatus(200);
 	next();
 })
 app.use('/products', require('./routes/productsRoute'));
 app.use('/auth', require('./routes/authRoute'));
 app.use('/users', require('./routes/usersRoute'));
+app.use('/categories', require('./routes/categoriesRoute'));
 
 
 module.exports = app;

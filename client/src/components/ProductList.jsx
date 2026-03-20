@@ -4,18 +4,8 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { getAll } from '../services/ProductService'
-import { useEffect, useState } from 'react';
 
-function ProductList({pathname}) {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        getAll(pathname).then(products => {
-            setProducts(products);
-        });
-    }, [pathname]);
-
+function ProductList({ products = [] }) {
     return (
         <Grid container spacing={3} padding={3}>
             {products?.length > 0 ? (
