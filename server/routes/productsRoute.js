@@ -3,6 +3,11 @@ const productService = require('../services/productService');
 const ratingService = require('../services/ratingService');
 const { requireAuthenticatedUser } = require('../helpers/authHelper');
 
+router.get('/category/:name', async (req, res) => {
+    const result = await productService.getByCategory(req.params.name);
+    res.status(result.status).json(result.data);
+});
+
 router.get('/:id/ratings/summary', async (req, res) => {
   const result = await ratingService.getProductRatingSummary(req.params.id);
   res.status(result.status).json(result.data);

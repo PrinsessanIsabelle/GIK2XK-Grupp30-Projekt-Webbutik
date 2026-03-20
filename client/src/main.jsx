@@ -12,6 +12,7 @@ import Login from './views/Login.jsx'
 import SignUp from './views/SignUp.jsx'
 import AccountSettings from './views/AccountSettings.jsx'
 import Payment from './views/Payment.jsx'
+import Categories from './views/Categories.jsx';
 
 const router = createBrowserRouter([
   {path: '/', element: <App />,
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
     {
       path: '/Cart/:id/Payment',
       element: <Payment />
+    },
+    {
+      path: '/categories/:name/products',
+      element: <Categories />
     }
   ]
   }

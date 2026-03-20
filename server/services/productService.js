@@ -134,7 +134,9 @@ function _formatProduct(product) {
       id: r.id,
       rating: r.rating,
       body: r.body,
-      createdAt: r.createdAt
+      createdAt: r.createdAt,
+      userId: r.userId,
+      userName: r.user?.username
     }));
   }
 
