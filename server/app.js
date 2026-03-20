@@ -40,6 +40,11 @@ app.use((req, res, next) => {
 	}
 	next();
 })
+
+app.get('/health', (req, res) => {
+	res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 app.use('/products', require('./routes/productsRoute'));
 app.use('/auth', require('./routes/authRoute'));
 app.use('/users', require('./routes/usersRoute'));

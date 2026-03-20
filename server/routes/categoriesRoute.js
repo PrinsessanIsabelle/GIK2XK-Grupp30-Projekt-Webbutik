@@ -1,36 +1,54 @@
 const router = require('express').Router();
 const db = require('../models');
 const productService = require('../services/productService.js');
+const { requireAuthenticatedUser } = require('../helpers/authHelper');
+const {
+  createResponseSuccess,
+  createResponseError,
+  createResponseMessage
+} = require('../helpers/responseHelper');
 
-router.get('/:name/products', (req, res) => {
-  const name = req.params.name;
+router.get('/:name/products', async (req, res) => {
+  const result = await productService.getByCategory(req.params.name);
+  res.status(result.status).json(result.data);
+});
 
-  productService.getByCategory(name).then((result) => {
+router.get('/', async (req, res) => {
+  try {
+    const categories = await db.category.findAll();
+    const result = createResponseSuccess(categories);
     res.status(result.status).json(result.data);
-  });
+  } catch (error) {
+    const result = createResponseError(error.status, error.message);
+    res.status(result.status).json(result.data);
+  }
 });
 
-router.get('/', (req, res) => {
-  db.category.findAll().then((result) => {
-    res.send(result);
-  });
+router.post('/', requireAuthenticatedUser, async (req, res) => {
+  try {
+    const category = await db.category.create(req.body);
+    const result = createResponseSuccess(category);
+    res.status(result.status).json(result.data);
+  } catch (error) {
+    const result = createResponseError(error.status, error.message);
+    res.status(result.status).json(result.data);
+  }
 });
 
-router.post('/', (req, res) => {
-  const category = req.body;
-  db.category.create(category).then((result) => {
-    res.send(result);
-  });
-});
+router.delete('/:id', requireAuthenticatedUser, async (req, res) => {
+  try {
+    const deletedRows = await db.category.destroy({ where: { id: req.params.id } });
+    if (!deletedRows) {
+      const notFound = createResponseError(404, 'Hittade ingen kategori att radera.');
+      return res.status(notFound.status).json(notFound.data);
+    }
 
-router.delete('/', (req, res) => {
-  db.category
-    .destroy({
-      where: { id: req.body.id }
-    })
-    .then(() => {
-      res.json(`Kategorin borttagen`);
-    });
+    const result = createResponseMessage(200, 'Kategorin borttagen');
+    return res.status(result.status).json(result.data);
+  } catch (error) {
+    const result = createResponseError(error.status, error.message);
+    return res.status(result.status).json(result.data);
+  }
 });
 
 module.exports = router;

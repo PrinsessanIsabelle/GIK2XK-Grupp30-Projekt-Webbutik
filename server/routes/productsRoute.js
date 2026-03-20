@@ -43,17 +43,17 @@ router.get('/', async (req, res) => {
   res.status(result.status).json(result.data);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', requireAuthenticatedUser, async (req, res) => {
   const result = await productService.create(req.body);
   res.status(result.status).json(result.data);
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireAuthenticatedUser, async (req, res) => {
   const result = await productService.update(req.body, req.params.id);
   res.status(result.status).json(result.data);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAuthenticatedUser, async (req, res) => {
   const result = await productService.destroy(req.params.id);
   res.status(result.status).json(result.data);
 });
