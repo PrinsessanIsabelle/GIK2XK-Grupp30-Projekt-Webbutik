@@ -32,10 +32,10 @@ const router = createBrowserRouter([
       path: '/products/:id',
       element: <ProductDetail />
     },
-   /* {
-      path: '/products/:id/rating/userId',  WTF GÖR VI HÄR?!?!?!? 
+    {
+      path: '/products/:id/rating',
       element: <ProductRating />
-    }, */
+    },
     {
       path: '/Login',
       element: <Login />
