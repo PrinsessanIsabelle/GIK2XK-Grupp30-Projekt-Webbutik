@@ -17,5 +17,12 @@
     "nodemon": "^3.1.14",
     "sequelize": "^6.37.8",
     "sequelize-cli": "^6.6.5"
-  }
+  },
+  "description": "",
+  "main": "app.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
