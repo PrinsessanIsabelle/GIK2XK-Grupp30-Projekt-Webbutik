@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-function ProductList({ products = [] }) {
+function ProductList({ products = [] }) {  // 👈 receive products as prop, no fetching
     return (
         <Grid container spacing={3} padding={3}>
             {products?.length > 0 ? (
