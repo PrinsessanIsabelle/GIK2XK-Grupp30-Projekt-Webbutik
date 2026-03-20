@@ -1,10 +1,14 @@
-const db = require('../models');
+// SERVICE-FIL - Behandlar den service/tjänster (funktioner) som i detta fall kundvagnen erbjuder. 
+
+const db = require('../models'); // Modellerna hämtas in, så att vi kan använda dem i tjänsten.
 const {
 	createResponseSuccess,
 	createResponseError,
 	createResponseMessage
-} = require('../helpers/responseHelper');
+} = require('../helpers/responseHelper'); // Hjälpfunktioner för att skapa enhetliga svar från tjänsten. 
+// Dessa används i alla funktioner nedan för att skapa svar som skickas tillbaka till klienten.
 
+// Funktion #1 - Hämta den aktiva kundvagnen för en användare, eller skapa en ny om ingen finns.
 async function getActiveCartByUser(userId) {
 	if (!userId) {
 		return createResponseError(422, 'userId är obligatoriskt.');
@@ -24,6 +28,7 @@ async function getActiveCartByUser(userId) {
 	}
 }
 
+// Funktion #2 - Hämta en kundvagn baserat på dess ID.
 async function getCartById(cartId) {
 	if (!cartId) {
 		return createResponseError(422, 'cartId är obligatoriskt.');
@@ -40,6 +45,7 @@ async function getCartById(cartId) {
 	}
 }
 
+// Funktion #3 - Lägg till en produkt i kundvagnen, eller uppdatera mängden om produkten redan finns i vagnen.
 async function addProduct(userId, productId, amount = 1) {
 	if (!userId || !productId) {
 		return createResponseError(422, 'userId och productId är obligatoriska.');
@@ -94,6 +100,7 @@ async function addProduct(userId, productId, amount = 1) {
 	}
 }
 
+// Funktion #4 - Uppdatera mängden av en specifik varurad i kundvagnen.
 async function updateRowAmount(userId, cartRowId, amount) {
 	if (!userId || !cartRowId) {
 		return createResponseError(422, 'userId och cartRowId är obligatoriska.');
@@ -137,6 +144,7 @@ async function updateRowAmount(userId, cartRowId, amount) {
 	}
 }
 
+// Funktion #5 - Ta bort en varurad från kundvagnen.
 async function removeRow(userId, cartRowId) {
 	if (!userId || !cartRowId) {
 		return createResponseError(422, 'userId och cartRowId är obligatoriska.');
@@ -175,6 +183,7 @@ async function removeRow(userId, cartRowId) {
 	}
 }
 
+// Funktion #6 - Töm kundvagnen genom att ta bort alla varor.
 async function clearCart(userId) {
 	if (!userId) {
 		return createResponseError(422, 'userId är obligatoriskt.');
@@ -203,6 +212,7 @@ async function clearCart(userId) {
 	}
 }
 
+// Funktion #7 - Checka ut kundvagnen genom att markera den som betalad.
 async function checkout(userId) {
 	if (!userId) {
 		return createResponseError(422, 'userId är obligatoriskt.');
@@ -242,6 +252,9 @@ async function checkout(userId) {
 	}
 }
 
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion hämtar en kundvagn med alla dess varurader och tillhörande produktinfo, 
+// baserat på kundvagnens ID.
 async function _getCartWithRows(cartId) {
 	return db.cart.findByPk(cartId, {
 		include: [
@@ -253,6 +266,9 @@ async function _getCartWithRows(cartId) {
 	});
 }
 
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion hämtar den aktiva kundvagnen för en användare, 
+// eller skapar en ny om ingen aktiv kundvagn finns.
 async function _getOrCreateActiveCart(userId, transaction) {
 	let cart = await db.cart.findOne({
 		where: { userId, payed: false },
@@ -272,6 +288,9 @@ async function _getOrCreateActiveCart(userId, transaction) {
 	return cart;
 }
 
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion formaterar en kundvagnsdata till ett mer användarvänligt format, 
+// inklusive beräkning av totalsummor och strukturering av varurader.
 function _formatCart(cart) {
 	const rows = (cart.cartRows || []).map((row) => {
 		const unitPrice = Number(row.product?.price || 0);
@@ -302,6 +321,10 @@ function _formatCart(cart) {
 	};
 }
 
+
+// Här ser vi de node-moduler som exporterats till denna fil.
+// Node-mudulerna i detta sammanhang är färdiga funktioner som är användbara 
+// i kundvagn-tjänsten. 
 module.exports = {
 	getActiveCartByUser,
 	getCartById,

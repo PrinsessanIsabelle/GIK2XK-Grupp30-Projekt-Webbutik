@@ -1,10 +1,13 @@
-const db = require('../models');
+// SERVICE-FIL - Behandlar den service/tjänster (funktioner) som i detta fall rating erbjuder/innebär. 
+
+const db = require('../models'); // Modellerna hämtas in, så att vi kan använda dem i tjänsten.
 const {
   createResponseSuccess,
   createResponseError,
   createResponseMessage
-} = require('../helpers/responseHelper');
+} = require('../helpers/responseHelper'); // Hjälpfunktioner för att skapa enhetliga svar från tjänsten.
 
+// Funktion #1 - Hämta alla betyg för en produkt, inklusive användarinformation.
 async function getRatingsByProduct(productId) {
   if (!productId) {
     return createResponseError(422, 'productId är obligatoriskt.');
@@ -30,6 +33,7 @@ async function getRatingsByProduct(productId) {
   }
 }
 
+// Funktion #2 - Hämta en sammanfattning av betyg för en produkt, inklusive genomsnitt och fördelning.
 async function getProductRatingSummary(productId) {
   if (!productId) {
     return createResponseError(422, 'productId är obligatoriskt.');
@@ -59,6 +63,7 @@ async function getProductRatingSummary(productId) {
   }
 }
 
+// Funktion #3 - Skapa ett nytt betyg för en produkt.
 async function createRating(userId, productId, data) {
   if (!userId || !productId) {
     return createResponseError(422, 'userId och productId är obligatoriska.');
@@ -87,6 +92,7 @@ async function createRating(userId, productId, data) {
   }
 }
 
+// Funktion #4 - Uppdatera ett befintligt betyg som användaren har skapat.
 async function updateOwnRating(userId, ratingId, data) {
   if (!userId || !ratingId) {
     return createResponseError(422, 'userId och ratingId är obligatoriska.');
@@ -118,6 +124,7 @@ async function updateOwnRating(userId, ratingId, data) {
   }
 }
 
+// Funktion #5 - Radera ett befintligt betyg som användaren har skapat.
 async function deleteOwnRating(userId, ratingId) {
   if (!userId || !ratingId) {
     return createResponseError(422, 'userId och ratingId är obligatoriska.');
@@ -137,6 +144,8 @@ async function deleteOwnRating(userId, ratingId) {
   }
 }
 
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion formaterar en ratingdata till ett mer användarvänligt format, inklusive att strukturera användarinformation.
 function _formatRating(rating) {
   return {
     id: rating.id,
@@ -149,7 +158,9 @@ function _formatRating(rating) {
       : null
   };
 }
-
+// Här ser vi de node-moduler som exporterats till denna fil.
+// Node-mudulerna i detta sammanhang är färdiga funktioner som är användbara 
+// i rating-tjänsten. 
 module.exports = {
   getRatingsByProduct,
   getProductRatingSummary,
