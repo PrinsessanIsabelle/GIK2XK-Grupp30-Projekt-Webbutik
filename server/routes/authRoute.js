@@ -1,10 +1,12 @@
-// Denna route hanterar inloggning och utloggning av användare, samt att hämta info om den inloggade användaren.
+// ROUTES-FIL för autenisering & inloggning.
 // Viktigt vid exempelvis att ha behörighet att göra en rating. 
 
-const router = require('express').Router();
-const db = require('../models');
-const { comparePassword } = require('../helpers/passwordHelper');
+const router = require('express').Router(); //  Routern skapas från Express.
+const db = require('../models'); // Modellerna hämtas in.
+const { comparePassword } = require('../helpers/passwordHelper'); // Använder hjälpfunktion att jämföra lösenord för användare.
 
+
+// Endpoint #1 - Logga in
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -45,6 +47,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Endpoint #2 - Logga ut
 router.post('/logout', (req, res) => {
   if (!req.session || !req.session.userId) {
     return res.status(200).json({ message: 'Ingen aktiv session att logga ut.' });
@@ -58,6 +61,7 @@ router.post('/logout', (req, res) => {
   });
 });
 
+// Endpoint #3 - Hämta info om inloggad användare
 router.get('/me', async (req, res) => {
   if (!req.session || !req.session.userId) {
     return res.status(401).json({ error: 'Du är inte inloggad.' });
