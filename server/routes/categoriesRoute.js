@@ -1,18 +1,23 @@
-const router = require('express').Router();
-const db = require('../models');
-const productService = require('../services/productService.js');
-const { requireAuthenticatedUser } = require('../helpers/authHelper');
+// ROUTES-FIL för kategorier.
+// Här hanteras alla endpoints relaterade till kategorier.
+
+const router = require('express').Router(); // Routern skapas från Express.
+const db = require('../models'); // Modellerna hämtas in.
+const productService = require('../services/productService.js'); // ProductService hämtas in, för att kunna anropa funktioner.
+const { requireAuthenticatedUser } = require('../helpers/authHelper'); // Använder hjälpfunktion för att kräva att användaren är inloggad för att använda vissa endpoints.
 const {
   createResponseSuccess,
   createResponseError,
   createResponseMessage
-} = require('../helpers/responseHelper');
+} = require('../helpers/responseHelper'); // Använder hjälpfunktioner för att skapa enhetliga API-responser (success, error etc från servern).
 
+// Endpoint #1 - Hämta alla produkter inom en kategori.
 router.get('/:name/products', async (req, res) => {
   const result = await productService.getByCategory(req.params.name);
   res.status(result.status).json(result.data);
 });
 
+// Endpoint #2 - Hämta alla kategorier.
 router.get('/', async (req, res) => {
   try {
     const categories = await db.category.findAll();
@@ -24,6 +29,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Endpoint #3 - Skapa en ny kategori (endast för inloggade användare).
 router.post('/', requireAuthenticatedUser, async (req, res) => {
   try {
     const category = await db.category.create(req.body);
@@ -35,6 +41,7 @@ router.post('/', requireAuthenticatedUser, async (req, res) => {
   }
 });
 
+// Endpoint #4 - Radera en kategori (endast för inloggade användare).
 router.delete('/:id', requireAuthenticatedUser, async (req, res) => {
   try {
     const deletedRows = await db.category.destroy({ where: { id: req.params.id } });
