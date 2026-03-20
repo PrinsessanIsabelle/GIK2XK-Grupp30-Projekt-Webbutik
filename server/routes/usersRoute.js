@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const userService = require('../services/userService');
+const { requireAuthenticatedUser } = require('../helpers/authHelper');
 
 router.get('/', async (req, res) => {
   const result = await userService.getAll();
@@ -21,12 +22,18 @@ router.post('/', async (req, res) => {
   res.status(result.status).json(result.data);
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireAuthenticatedUser, async (req, res) => {
+  if (Number(req.params.id) !== Number(req.authUserId)) {
+    return res.status(403).json({ error: 'Du kan bara uppdatera ditt eget konto.' });
+  }
   const result = await userService.update(req.body, req.params.id);
   res.status(result.status).json(result.data);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAuthenticatedUser, async (req, res) => {
+  if (Number(req.params.id) !== Number(req.authUserId)) {
+    return res.status(403).json({ error: 'Du kan bara ta bort ditt eget konto.' });
+  }
   const result = await userService.destroy(req.params.id);
   res.status(result.status).json(result.data);
 });
