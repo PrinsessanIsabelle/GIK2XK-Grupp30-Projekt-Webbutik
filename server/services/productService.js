@@ -150,6 +150,8 @@ async function _findOrCreateCategoryId(name) {
 }
 
 async function _addCategoryToProduct(product, categories) {
+  await db.productCategory.destroy({where: { productId: product.id }});
+
   if (!categories || categories.length === 0) return;
   const categoryIds = await Promise.all(categories.map(_findOrCreateCategoryId));
   await product.setCategories(categoryIds);

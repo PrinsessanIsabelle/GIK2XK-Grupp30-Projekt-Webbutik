@@ -18,7 +18,7 @@ function App() {
     </Box>
     <ul>
       <li>
-        <Link to="/product/new">Skapa produkt</Link>
+        <Link to="/products/new">Skapa produkt</Link>
       </li>
       <li>
         <Link to="/Cart">Kundvagn</Link>

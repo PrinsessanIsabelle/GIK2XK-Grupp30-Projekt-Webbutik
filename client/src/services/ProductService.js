@@ -42,7 +42,7 @@ export async function create(product) {
 
 export async function update(product) {
     try{
-        const response = await axios.put(`/products`, product);
+        const response = await axios.put(`/products/${product.id}`, product);
         if(response.status === 200) return response.data;
         else {
         console.log(response.data);
@@ -55,7 +55,7 @@ export async function update(product) {
 
 export async function remove(id) {
     try{
-        const response = await axios.delete(`/products`, { data: { id }});
+        const response = await axios.delete(`/products/${id}`, { data: { id }});
         if(response.status === 200) return response.data;
         else {
         console.log(response.data);
@@ -68,7 +68,7 @@ export async function remove(id) {
 
 export async function addRating(productId, rating) {
     try{
-        const response = await axios.post(`/products/${productId}/addRating`, rating);
+        const response = await axios.post(`/products/${productId}/ratings`, rating);
         if(response.status === 200) return response.data;
         else {
         console.log(response.data);
