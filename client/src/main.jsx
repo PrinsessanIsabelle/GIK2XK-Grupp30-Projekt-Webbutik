@@ -14,6 +14,7 @@ import SignUp from './views/SignUp.jsx'
 import AccountSettings from './views/AccountSettings.jsx'
 import Payment from './views/Payment.jsx'
 import Categories from './views/Categories.jsx';
+import { CssBaseline } from '@mui/material';
 
 const router = createBrowserRouter([
   { path: '/', element: <App />,
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
+      <CssBaseline />
       <RouterProvider router={router} />
     </AuthProvider>
   </StrictMode>
