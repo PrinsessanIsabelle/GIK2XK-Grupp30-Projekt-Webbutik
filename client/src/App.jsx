@@ -14,17 +14,17 @@ function App() {
 
   const handleLogout = async () => {
       try {
-          await logoutUser();  // tells the server to destroy the session
+          await logoutUser(); 
       } catch (err) {
           console.error('Utloggning misslyckades:', err);
       } finally {
-          logout();  // always clear the local state even if server call fails
+          logout();  
       }
   };
 
   return (
         <>
-            {!isHome && <Navbar />}  {/* ✅ only show on non-home pages */}
+            {!isHome && <Navbar />}  {}
             <Outlet />
         </>
     );
