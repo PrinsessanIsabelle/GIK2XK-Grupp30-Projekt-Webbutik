@@ -1,33 +1,45 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { createRating } from "../services/ratingService";
 
-function RatingForm({ onSave }) {
+function RatingForm({ productId, onSave }) {
+    const [rating, setRating] = useState({ rating: '', body: '' });
+    const [error, setError] = useState(null);
 
-    const [rating, setRating] = useState({ rating: '', body: '', userId: 1});
+    const handleSubmit = async () => {
+        try {
+            const result = await createRating(productId, rating.rating, rating.body);
+            onSave(result); // notify parent component that a new rating was saved
+            setRating({ rating: '', body: '' }); // clear the form
+            setError(null);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
     return ( 
         <form>
+            {error && <Typography color="error">{error}</Typography>}
             <div>
                 <TextField 
-                value={rating.rating}
-                onChange={(e) => setRating({ ...rating, rating: e.target.value })}           
-                label="Rating"
-                name=""
-            />
+                    value={rating.rating}
+                    onChange={(e) => setRating({ ...rating, rating: e.target.value })}           
+                    label="Rating"
+                />
             </div>
             <div>
-             <TextField 
-             multiline minRows={3}
-             value={rating.body}
-             onChange={(e) => setRating({ ...rating, body: e.target.value })} 
-             label="Review"
-             name="body"
-             id="body"
-             />
+                <TextField 
+                    multiline minRows={3}
+                    value={rating.body}
+                    onChange={(e) => setRating({ ...rating, body: e.target.value })} 
+                    label="Review"
+                    name="body"
+                    id="body"
+                />
             </div>
-            <Button onClick={() => onSave(rating)} >Skicka rating</Button>
+            <Button onClick={handleSubmit}>Skicka rating</Button>
         </form>
-     );
+    );
 }
 
 export default RatingForm;

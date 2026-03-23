@@ -1,5 +1,49 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { loginUser } from '../services/authService';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
 function Login() {
-    return ( <h2>Login</h2> );
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+
+    const handleLogin = async () => {
+    try {
+        const data = await loginUser(email, password);
+        login(data.user); 
+        navigate('/');
+    } catch (err) {
+        setError(err.message);
+    }
+};
+
+    return (
+        <Box sx={{ maxWidth: 400, margin: '100px auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography variant="h4">Logga in</Typography>
+            {error && <Typography color="error">{error}</Typography>}
+            <TextField
+                label="E-post"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+                label="Lösenord"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button variant="contained" onClick={handleLogin}>
+                Logga in
+            </Button>
+        </Box>
+    );
 }
 
 export default Login;

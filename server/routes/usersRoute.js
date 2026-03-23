@@ -48,4 +48,10 @@ router.delete('/:id', requireAuthenticatedUser, async (req, res) => {
   res.status(result.status).json(result.data);
 });
 
+// Endpoint #7 - Logga in
+router.post('/login', async (req, res) => {
+    const result = await userService.login(req.body);
+    res.status(result.status).json(result.data);
+});
+
 module.exports = router;
