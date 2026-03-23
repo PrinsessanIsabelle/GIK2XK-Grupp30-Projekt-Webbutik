@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -27,8 +28,8 @@ const router = createBrowserRouter([
       { path: '/Login', element: <Login /> },
       { path: '/SignUp', element: <SignUp /> },
       { path: '/AccountSettings', element: <AccountSettings /> },
-      { path: '/Cart/:id', element: <Cart /> },
-      { path: '/Cart/:id/Payment', element: <Payment /> },
+      { path: '/cart', element: <Cart /> },
+      { path: '/payment', element: <Payment /> },
       { path: '/categories/:name/products', element: <Categories /> }
     ]
   }
@@ -36,8 +37,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <CssBaseline />
-      <RouterProvider router={router} />
+      <CartProvider>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </CartProvider>
     </AuthProvider>
   </StrictMode>
 );
