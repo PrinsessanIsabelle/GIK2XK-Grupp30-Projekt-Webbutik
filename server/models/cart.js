@@ -1,4 +1,6 @@
-module.exports = (sequelize, DataTypes) => {
+// Modeller beskriver hur en *tabell* ska se ut. Tänk ER-diagram och de tabeller som definderas där.
+
+module.exports = (sequelize, DataTypes) => { // Exporterar en funktion som definierar modellen.
   return sequelize.define(
     'cart', 
     {

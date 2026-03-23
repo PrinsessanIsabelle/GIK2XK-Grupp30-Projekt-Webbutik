@@ -1,17 +1,21 @@
-const db = require('../models');
+// SERVICE-FIL - Behandlar den service/tjänster (funktioner) som i detta fall användare har. 
+
+const db = require('../models'); // Modellerna hämtas in, så att vi kan använda dem i tjänsten.
 const {
   createResponseSuccess,
   createResponseError,
   createResponseMessage
 } = require('../helpers/responseHelper');
-const { hashPassword } = require('../helpers/passwordHelper');
+const { hashPassword } = require('../helpers/passwordHelper'); // Hjälpfunktioner för att skapa enhetliga svar från tjänsten. 
+// Dessa används i alla funktioner nedan för att skapa svar som skickas tillbaka till klienten.
 
+// Privat funktion (understreck) för att validera e-postadresser. Används i create och update-funktionerna nedan.
 function _isValidEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
 }
 
-// Listar alla användare (users) i ordning "nyast skapande först"
+// Funktion #1 - Listar alla användare (users) i ordning "nyast skapande först"
 async function getAll() {
   try {
     const users = await db.user.findAll({
@@ -23,7 +27,7 @@ async function getAll() {
   }
 }
 
-// Hämtar användare baserat på id. Returnerar 404 om ingen användare hittas.
+// Funktion #2 - Hämtar användare baserat på id. Returnerar 404 om ingen användare hittas.
 async function getById(id) {
   if (!id) {
     return createResponseError(422, 'id är obligatoriskt.');
@@ -38,7 +42,7 @@ async function getById(id) {
     return createResponseError(error.status, error.message);
   }
 }
-// Hämtar en användare med deras omdömen (ratings)
+// Funktion #3 - Hämtar en användare med deras omdömen (ratings)
 async function getUserWithRatings(id) {
   if (!id) {
     return createResponseError(422, 'id är obligatoriskt.');
@@ -61,7 +65,7 @@ async function getUserWithRatings(id) {
   }
 }
 
-// Skapar en ny användare utefter nedanstående krav. 
+// Funktion #4 - Skapar en ny användare utefter nedanstående krav. 
 async function create(userData) {
   if (!userData.email || !userData.username || !userData.password) {
     return createResponseError(
@@ -114,7 +118,7 @@ async function create(userData) {
   }
 }
 
-// Uppdaterar en användare. 
+// Funktion #5 - Uppdaterar en användare.
 async function update(userData, id) {
   if (!id) {
     return createResponseError(422, 'id är obligatoriskt.');
@@ -173,7 +177,7 @@ async function update(userData, id) {
   }
 }
 
-// Att radera en användare. 
+// Funktion #6 - Radera en användare. 
 async function destroy(id) {
   if (!id) {
     return createResponseError(422, 'id är obligatoriskt.');
@@ -191,7 +195,9 @@ async function destroy(id) {
     return createResponseError(error.status, error.message);
   }
 }
-
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion formaterar en användardata till ett mer användarvänligt format, 
+// inklusive att strukturera omdömen (ratings) och produktinformation.
 function _formatUser(user) {
   return {
     id: user.id,
@@ -205,7 +211,9 @@ function _formatUser(user) {
     updatedAt: user.updatedAt
   };
 }
-
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion formaterar en användardata med dess omdömen (ratings) till ett mer användarvänligt format, 
+// inklusive att strukturera omdömen och produktinformation.
 function _formatUserWithRatings(user) {
   const formatted = _formatUser(user);
   formatted.ratings = (user.ratings || []).map((r) => ({

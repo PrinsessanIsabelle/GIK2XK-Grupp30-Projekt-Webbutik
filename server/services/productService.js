@@ -1,10 +1,13 @@
-const db = require('../models');
+// SERVICE-FIL - Behandlar den service/tjänster (funktioner) som i detta fall produkterna erbjuder. 
+
+const db = require('../models'); // Modellerna hämtas in, så att vi kan använda dem i tjänsten.
 const {
   createResponseSuccess,
   createResponseError,
   createResponseMessage
-} = require('../helpers/responseHelper');
+} = require('../helpers/responseHelper'); // Hjälpfunktioner för att skapa enhetliga svar från tjänsten.
 
+// Funktion #1 - Hämta alla produkter, inklusive deras kategorier och betyg.
 async function getAll() {
   try {
     const allProducts = await db.product.findAll({
@@ -19,6 +22,7 @@ async function getAll() {
   }
 }
 
+// Funktion #2 - Hämta en produkt baserat på dess ID, inklusive dess kategori och betyg.
 async function getById(id) {
   try {
     const product = await db.product.findOne({
@@ -37,6 +41,7 @@ async function getById(id) {
   }
 }
 
+// Funktion #3 - Hämta alla produkter som tillhör en viss kategori, inklusive deras betyg.
 async function getByCategory(categoryName) {
   try {
     const category = await db.category.findOne({ where: { name: categoryName } });
@@ -52,6 +57,7 @@ async function getByCategory(categoryName) {
   }
 }
 
+// Funktion #4 - Lägg till ett betyg för en produkt.
 async function addRating(productId, rating) {
   if (!productId) {
     return createResponseError(422, 'Id är obligatoriskt');
@@ -65,6 +71,7 @@ async function addRating(productId, rating) {
   }
 }
 
+// Funktion #5 - Skapa en ny produkt, inklusive att hantera kategorier.
 async function create(product) {
   if (!product.productName || product.productName.length < 2 || product.productName.length > 100) {
     return createResponseError(422, 'Produktnamnet måste vara mellan 2 och 100 tecken.');
@@ -78,6 +85,7 @@ async function create(product) {
   }
 }
 
+// Funktion #6 - Uppdatera en befintlig produkt, inklusive att hantera kategorier.
 async function update(product, id) {
   if (!id) {
     return createResponseError(422, 'Id är obligatoriskt');
@@ -100,6 +108,7 @@ async function update(product, id) {
   }
 }
 
+// Funktion #7 - Radera en produkt baserat på dess ID.
 async function destroy(id) {
   if (!id) {
     return createResponseError(422, 'Id är obligatoriskt');
@@ -112,6 +121,9 @@ async function destroy(id) {
   }
 }
 
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion formaterar en produktdata till ett mer användarvänligt format,
+// inklusive att strukturera kategorier som en lista av namn och betyg med användarinformation.
 function _formatProduct(product) {
   const cleanProduct = {
     id: product.id,
@@ -143,12 +155,16 @@ function _formatProduct(product) {
   return cleanProduct;
 }
 
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion hittar eller skapar en kategori baserat på dess namn, och returnerar dess ID.
 async function _findOrCreateCategoryId(name) {
   name = name.toLowerCase().trim();
   const [category] = await db.category.findOrCreate({ where: { name } });
   return category.id;
 }
 
+// Ingen importerad node-modul-funktion - Understreck visar att den är privat.
+// Denna funktion lägger till kategorier till en produkt genom att hitta eller skapa kategorier och sedan associera dem med produkten.
 async function _addCategoryToProduct(product, categories) {
   await db.productCategory.destroy({where: { productId: product.id }});
 
@@ -157,6 +173,9 @@ async function _addCategoryToProduct(product, categories) {
   await product.setCategories(categoryIds);
 }
 
+// Här ser vi de node-moduler som exporterats till denna fil.
+// Node-mudulerna i detta sammanhang är färdiga funktioner som är användbara 
+// i product-tjänsten. 
 module.exports = {
   getAll,
   getById,
