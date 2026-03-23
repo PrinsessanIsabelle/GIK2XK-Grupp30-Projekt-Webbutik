@@ -11,7 +11,7 @@ useEffect(() => {
     }, []);
     return (
     <>  
-        <h2>Get fucked up - Drinks CO</h2>     
+        <h2>Whimsical Potions</h2>     
         <CategoryList />
         <ProductList products={products} />
     </>
