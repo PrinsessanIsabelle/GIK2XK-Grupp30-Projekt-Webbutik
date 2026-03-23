@@ -1,5 +1,97 @@
+import {
+    Alert,
+    Box,
+    Button,
+    IconButton,
+    List,
+    ListItem,
+    ListItemText,
+    Stack,
+    TextField,
+    Typography
+} from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useCart } from '../context/CartContext';
+
 function Cart() {
-    return ( <h2>Cart</h2> );
+    const { cart, isLoading, error, updateAmount, removeFromCart, clearAll, checkout } = useCart();
+
+    const handleAmountChange = async (rowId, rawValue) => {
+        const amount = Number(rawValue);
+        if (!Number.isFinite(amount) || amount < 0) return;
+        await updateAmount(rowId, amount);
+    };
+
+    const handleCheckout = async () => {
+        const result = await checkout();
+        if (result) {
+            alert('Köpet genomfördes.');
+        }
+    };
+
+    return (
+        <Box sx={{ maxWidth: 900, margin: '2rem auto', padding: '1rem' }}>
+            <Typography variant="h4" gutterBottom>
+                Kundvagn
+            </Typography>
+
+            {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                    {error}
+                </Alert>
+            )}
+
+            {isLoading ? (
+                <Typography>Laddar kundvagn...</Typography>
+            ) : cart?.rows?.length ? (
+                <>
+                    <List>
+                        {cart.rows.map((row) => (
+                            <ListItem
+                                key={row.id}
+                                divider
+                                secondaryAction={
+                                    <IconButton edge="end" onClick={() => removeFromCart(row.id)}>
+                                        <DeleteOutlineIcon />
+                                    </IconButton>
+                                }
+                            >
+                                <ListItemText
+                                    primary={row.product?.productName}
+                                    secondary={`${row.product?.price} kr/st - Totalt: ${row.lineTotal} kr`}
+                                />
+                                <TextField
+                                    label="Antal"
+                                    type="number"
+                                    size="small"
+                                    sx={{ width: 90, mr: 7 }}
+                                    value={row.amount}
+                                    inputProps={{ min: 0 }}
+                                    onChange={(event) => handleAmountChange(row.id, event.target.value)}
+                                />
+                            </ListItem>
+                        ))}
+                    </List>
+
+                    <Stack spacing={1} mt={2}>
+                        <Typography variant="h6">Antal varor: {cart.totalAmount}</Typography>
+                        <Typography variant="h6">Total: {cart.totalPrice} kr</Typography>
+                    </Stack>
+
+                    <Stack direction="row" spacing={2} mt={3}>
+                        <Button variant="outlined" color="error" onClick={clearAll}>
+                            Töm kundvagn
+                        </Button>
+                        <Button variant="contained" onClick={handleCheckout}>
+                            Checkout
+                        </Button>
+                    </Stack>
+                </>
+            ) : (
+                <Typography>Din kundvagn är tom.</Typography>
+            )}
+        </Box>
+    );
 }
 
 export default Cart;

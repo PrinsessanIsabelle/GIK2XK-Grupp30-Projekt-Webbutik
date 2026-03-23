@@ -2,6 +2,7 @@ import ProductList from '../components/ProductList';
 import CategoryList from '../components/CategoryList';
 import { useEffect, useState } from 'react';
 import { getAll } from '../services/ProductService';
+import { useCart } from '../context/CartContext';
 import { Box, Typography, Container, Toolbar, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -9,13 +10,21 @@ import { logoutUser } from '../services/authService';
 
 function Home() {
     const [products, setProducts] = useState([]);
-    const { user, logout } = useAuth();
+    const { addToCart } = useCart();
+
+        const { user, logout } = useAuth();
 
     useEffect(() => {
-        getAll().then((response) => {
-            setProducts(response || []);
+            getAll().then((response) => {
+                setProducts(response || []);
+        ;
         });
     }, []);
+
+    const handleAddToCart = async (product) => {
+        await addToCart(product, 1);
+    };
+
 
     const handleLogout = async () => {
         try {
@@ -90,7 +99,7 @@ function Home() {
                 <Typography variant="h5" fontWeight="bold" marginTop={4} marginBottom={2} sx={{ color: '#4a148c' }}>
                     Alla produkter
                 </Typography>
-                <ProductList products={products} />
+                <ProductList products={products} onAddToCart={handleAddToCart} />
             </Container>
         </>
     );

@@ -7,11 +7,13 @@ import Category from "../components/Category";
 import RatingSummary from '../components/RatingSummary';
 import { getOne, addRating } from "../services/ProductService";
 import { useEffect, useState } from "react";
+import { useCart } from '../context/CartContext';
 
 function ProductDetail() {
     const [product, setProduct] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
+    const { addToCart } = useCart();
 
     useEffect(() => {
         getOne(id).then((response) => { 
@@ -22,12 +24,18 @@ function ProductDetail() {
     
       function onRatingAdd() {
     getOne(id).then((product) => setProduct(product));
-    }   
+        }
+
+        const handleAddToCart = async () => {
+                if (!product) return;
+                await addToCart(product, 1);
+        };
     
     return ( 
         <div>
             <RatingSummary ratings={product?.ratings} />
             <ProductItemLarge product={product}/>
+            <Button variant="contained" onClick={handleAddToCart}>Lägg i kundvagn</Button>
             <Button onClick={() => navigate(-1)}>Tillbaka</Button>
             <Button onClick={() => navigate(`/products/${product?.id}/edit`)}>Ändra</Button>
             <RatingForm productId={id} onSave={onRatingAdd}/>
