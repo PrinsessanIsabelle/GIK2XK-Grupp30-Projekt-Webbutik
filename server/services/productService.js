@@ -148,7 +148,7 @@ function _formatProduct(product) {
       body: r.body,
       createdAt: r.createdAt,
       userId: r.userId,
-      userName: r.user?.username
+      username: r.user?.username
     }));
   }
 
