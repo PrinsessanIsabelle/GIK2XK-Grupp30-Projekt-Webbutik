@@ -4,8 +4,9 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import RatingSummary from '../components/RatingSummary';
 
-function ProductList({ products = [] }) {  // 👈 receive products as prop, no fetching
+function ProductList({ products = [] }) { 
     return (
         <Grid container spacing={3} padding={3}>
             {products?.length > 0 ? (
@@ -26,7 +27,8 @@ function ProductList({ products = [] }) {  // 👈 receive products as prop, no 
                                     <Typography variant="body2" color="text.secondary" gutterBottom>
                                         {product.description}
                                     </Typography>
-                                    <Typography variant="subtitle1" fontWeight="bold">
+                                    <RatingSummary ratings={product?.ratings} /> {}
+                                    <Typography variant="subtitle1" fontWeight="bold" marginTop={1}>
                                         {product.price} kr
                                     </Typography>
                                 </CardContent>
@@ -42,4 +44,5 @@ function ProductList({ products = [] }) {  // 👈 receive products as prop, no 
         </Grid>
     );
 }
+
 export default ProductList;

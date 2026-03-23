@@ -24,3 +24,18 @@ export async function logoutUser() {
     }
     return data;
 }
+
+export async function signUpUser(userData) {
+    const response = await fetch('http://localhost:5000/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(userData)
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.error || 'Registrering misslyckades.');
+    }
+    return data;
+}

@@ -42,7 +42,11 @@ function Login() {
             <Button variant="contained" onClick={handleLogin}>
                 Logga in
             </Button>
+            <Typography variant="body2">
+                Inget konto? <a href="/SignUp">Skapa konto</a>
+            </Typography>   
         </Box>
+        
     );
 }
 

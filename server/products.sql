@@ -160,6 +160,8 @@ ON DUPLICATE KEY UPDATE
 	category_id = VALUES(category_id),
 	updated_at = VALUES(updated_at);
 
+INSERT INTO users (email, username, password_hash, created_at, updated_at)
+VALUES ('test@test.com', 'testuser', 'bajs123', NOW(), NOW());
 
 INSERT INTO ratings (user_id, product_id, rating, body, created_at, updated_at) VALUES
 (1, 1001, 5, 'Fantastiskt te, väldigt aromatiskt!', NOW(), NOW()),
