@@ -6,8 +6,11 @@ const {
   createResponseError,
   createResponseMessage
 } = require('../helpers/responseHelper');
-const { hashPassword } = require('../helpers/passwordHelper'); // Hjälpfunktioner för att skapa enhetliga svar från tjänsten. 
+const { hashPassword, comparePassword } = require('../helpers/passwordHelper');
+const jwt = require('jsonwebtoken');
+// Hjälpfunktioner för att skapa enhetliga svar från tjänsten. 
 // Dessa används i alla funktioner nedan för att skapa svar som skickas tillbaka till klienten.
+
 
 // Privat funktion (understreck) för att validera e-postadresser. Används i create och update-funktionerna nedan.
 function _isValidEmail(email) {
@@ -195,6 +198,31 @@ async function destroy(id) {
     return createResponseError(error.status, error.message);
   }
 }
+
+async function login(userData) {
+    if (!userData.email || !userData.password) {
+        return createResponseError(422, 'Email och lösenord är obligatoriska.');
+    }
+    try {
+        const user = await db.user.scope(null).findOne({ where: { email: userData.email } });
+        if (!user) {
+            return createResponseError(401, 'Fel email eller lösenord.');
+        }
+        const isValid = await comparePassword(userData.password, user.passwordHash);
+        if (!isValid) {
+            return createResponseError(401, 'Fel email eller lösenord.');
+        }
+        const token = jwt.sign(
+            { id: user.id },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+        return createResponseSuccess({ token, user: _formatUser(user) });
+    } catch (error) {
+        return createResponseError(error.status, error.message);
+    }
+}
+
 // Ingen importerad node-modul-funktion - Understreck visar att den är privat.
 // Denna funktion formaterar en användardata till ett mer användarvänligt format, 
 // inklusive att strukturera omdömen (ratings) och produktinformation.
@@ -241,5 +269,6 @@ module.exports = {
   getUserWithRatings,
   create,
   update,
-  destroy
+  destroy,
+  login
 };
