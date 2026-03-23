@@ -38,22 +38,22 @@ Object.keys(db).forEach(modelName => {
 });
  /*   En användare kan ha flera carts. Tar bort cat om användare tas bort */
 db.cart.belongsTo(db.user, { foreignKey: { allowNull: false } });
-db.user.hasMany(db.cart, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.user.hasMany(db.cart, { foreignKey: { allowNull: false }, onDelete: 'CASCADE', hooks: true });
 
 db.rating.belongsTo(db.product, { foreignKey: { allowNull: false } });
-db.product.hasMany(db.rating, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.product.hasMany(db.rating, { foreignKey: { allowNull: false }, onDelete: 'CASCADE', hooks: true });
 
 db.rating.belongsTo(db.user, { foreignKey: { allowNull: false } });
-db.user.hasMany(db.rating, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.user.hasMany(db.rating, { foreignKey: { allowNull: false }, onDelete: 'CASCADE', hooks: true });
 
-db.product.belongsToMany(db.category, { through: db.productCategory, onDelete: 'CASCADE' });
-db.category.belongsToMany(db.product, { through: db.productCategory, onDelete: 'CASCADE' })
+db.product.belongsToMany(db.category, { through: db.productCategory, onDelete: 'CASCADE', hooks: true });
+db.category.belongsToMany(db.product, { through: db.productCategory, onDelete: 'CASCADE', hooks: true })
 
 db.cartRow.belongsTo(db.cart, { foreignKey: { allowNull: false } });
-db.cart.hasMany(db.cartRow, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.cart.hasMany(db.cartRow, { foreignKey: { allowNull: false }, onDelete: 'CASCADE', hooks: true });
 
 db.cartRow.belongsTo(db.product, { foreignKey: { allowNull: false } });
-db.product.hasMany(db.cartRow, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+db.product.hasMany(db.cartRow, { foreignKey: { allowNull: false }, onDelete: 'CASCADE', hooks: true });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
