@@ -1,14 +1,28 @@
 import { Link } from 'react-router-dom';
+import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import RatingSummary from '../components/RatingSummary';
 
-function ProductItem({product}) {
+function ProductItem({ product }) {
     return (
-        <>
-        <Link to={`/products/${product.id}`}>
-            <img width={200} src={product.imageUrl}/>   
-            <h3>{product.productName}</h3>
-            <p>Pris: {product.price}</p>
+        <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
+            <Card sx={{ height: '100%', '&:hover': { boxShadow: 6 } }}>
+                <CardMedia
+                    component="img"
+                    height="200"
+                    image={product.imageUrl}
+                    alt={product.productName}
+                />
+                <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                        {product.productName}
+                    </Typography>
+                    <RatingSummary ratings={product?.ratings} />
+                    <Typography variant="subtitle1" fontWeight="bold" marginTop={1}>
+                        {product.price} kr
+                    </Typography>
+                </CardContent>
+            </Card>
         </Link>
-    </>
     );
 }
 

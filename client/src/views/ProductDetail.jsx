@@ -1,9 +1,10 @@
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import RatingForm from "../components/RatingForm";
 import Rating from "../components/Rating";
 import ProductItemLarge from "../components/ProductItemLarge";
 import Category from "../components/Category";
+import RatingSummary from '../components/RatingSummary';
 import { getOne, addRating } from "../services/ProductService";
 import { useEffect, useState } from "react";
 
@@ -25,13 +26,16 @@ function ProductDetail() {
     
     return ( 
         <div>
+            <RatingSummary ratings={product?.ratings} />
             <ProductItemLarge product={product}/>
             <Button onClick={() => navigate(-1)}>Tillbaka</Button>
             <Button onClick={() => navigate(`/products/${product?.id}/edit`)}>Ändra</Button>
             <RatingForm productId={id} onSave={onRatingAdd}/>
-            {product?.ratings && product.ratings.map((rating, i) =>(
-                <Rating key={`rating_${i}`} rating={rating} />
-            ))}
+            <Box sx={{ maxWidth: 600, marginTop: 3 }}>
+                {product?.ratings && product.ratings.map((rating, i) => (
+                    <Rating key={`rating_${i}`} rating={rating} />
+                ))}
+            </Box>
         </div>
      );
 }
