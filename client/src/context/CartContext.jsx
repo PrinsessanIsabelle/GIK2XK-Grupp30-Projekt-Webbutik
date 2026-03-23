@@ -61,6 +61,40 @@ function saveGuestCart(cart) {
     localStorage.setItem(GUEST_CART_STORAGE_KEY, JSON.stringify({ rows: cart.rows || [] }));
 }
 
+function addProductToGuestCart(product, amount) {
+    const currentCart = loadGuestCart();
+    const existingRow = currentCart.rows.find((row) => row.product.id === product.id);
+
+    let updatedRows;
+    if (existingRow) {
+        updatedRows = currentCart.rows.map((row) =>
+            row.product.id === product.id
+                ? {
+                      ...row,
+                      amount: row.amount + amount
+                  }
+                : row
+        );
+    } else {
+        updatedRows = [
+            ...currentCart.rows,
+            {
+                id: product.id,
+                amount,
+                lineTotal: Number(product.price || 0) * amount,
+                product: {
+                    id: product.id,
+                    productName: product.productName,
+                    price: Number(product.price || 0),
+                    imageUrl: product.imageUrl
+                }
+            }
+        ];
+    }
+
+    return buildCartFromGuestRows(updatedRows);
+}
+
 export function CartProvider({ children }) {
     const { user } = useAuth();
     const [cart, setCart] = useState(buildCartFromGuestRows([]));
@@ -106,46 +140,20 @@ export function CartProvider({ children }) {
 
         if (user) {
             const response = await addProductToCart(product.id, amount);
-            if (!response) {
-                setError('Kunde inte lägga till produkt i kundvagnen.');
-                return null;
+            if (response) {
+                setCart(response);
+                return response;
             }
 
-            setCart(response);
-            return response;
+            // If local user state exists but session/cookie is missing, keep UX working.
+            const fallbackCart = addProductToGuestCart(product, amount);
+            setCart(fallbackCart);
+            saveGuestCart(fallbackCart);
+            setError('Kunde inte spara till serverns kundvagn. Produkten lades i lokal kundvagn.');
+            return fallbackCart;
         }
 
-        const currentCart = loadGuestCart();
-        const existingRow = currentCart.rows.find((row) => row.product.id === product.id);
-
-        let updatedRows;
-        if (existingRow) {
-            updatedRows = currentCart.rows.map((row) =>
-                row.product.id === product.id
-                    ? {
-                          ...row,
-                          amount: row.amount + amount
-                      }
-                    : row
-            );
-        } else {
-            updatedRows = [
-                ...currentCart.rows,
-                {
-                    id: product.id,
-                    amount,
-                    lineTotal: Number(product.price || 0) * amount,
-                    product: {
-                        id: product.id,
-                        productName: product.productName,
-                        price: Number(product.price || 0),
-                        imageUrl: product.imageUrl
-                    }
-                }
-            ];
-        }
-
-        const nextCart = buildCartFromGuestRows(updatedRows);
+        const nextCart = addProductToGuestCart(product, amount);
         setCart(nextCart);
         saveGuestCart(nextCart);
         return nextCart;

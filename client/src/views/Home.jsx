@@ -10,7 +10,7 @@ import { logoutUser } from '../services/authService';
 
 function Home() {
     const [products, setProducts] = useState([]);
-    const { addToCart } = useCart();
+    const { addToCart, cart } = useCart();
 
         const { user, logout } = useAuth();
 
@@ -56,7 +56,7 @@ function Home() {
                             Skapa produkt
                         </Button>
                         <Button color="inherit" component={Link} to="/cart" sx={{ color: 'white' }}>
-                            Kundvagn
+                            Kundvagn ({cart?.totalAmount || 0})
                         </Button>
                         {user ? (
                             <>
