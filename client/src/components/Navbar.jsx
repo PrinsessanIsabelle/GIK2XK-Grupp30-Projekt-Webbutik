@@ -28,8 +28,8 @@ function Navbar() {
                     <Button component={Link} to="/products/new" sx={{ color: 'white' }}>
                         Skapa produkt
                     </Button>
-                    <Button component={Link} to="/Cart" sx={{ color: 'white' }}>
-                        Kundvagn ({cart?.totalAmount || 0}) {}
+                    <Button component={Link} to="/cart" sx={{ color: 'white' }}>
+                        Kundvagn ({cart?.totalAmount || 0})
                     </Button>
                     {user ? (
                         <>

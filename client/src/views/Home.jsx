@@ -22,7 +22,7 @@ function Home() {
     }, []);
 
     const handleAddToCart = async (product) => {
-        await addToCart(product, 1);
+        return addToCart(product, 1);
     };
 
 
@@ -55,7 +55,7 @@ function Home() {
                         <Button color="inherit" component={Link} to="/products/new" sx={{ color: 'white' }}>
                             Skapa produkt
                         </Button>
-                        <Button color="inherit" component={Link} to="/Cart" sx={{ color: 'white' }}>
+                        <Button color="inherit" component={Link} to="/cart" sx={{ color: 'white' }}>
                             Kundvagn
                         </Button>
                         {user ? (
