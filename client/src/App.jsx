@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom"
-import { Box, AppBar, Typography, Toolbar, Button } from '@mui/material'
+import { Box, AppBar, Typography, Toolbar, Button, Container } from '@mui/material'
 import { useAuth } from './context/AuthContext';
 import { useCart } from './context/CartContext';
 import { logoutUser } from './services/authService';
@@ -22,10 +22,22 @@ function App() {
       }
   };
 
+
   return (
         <>
-            {!isHome && <Navbar />}  {}
-            <Outlet />
+            {!isHome && <Navbar />} 
+            <Container maxWidth={false} sx={{
+                  }}>   
+                 <Box sx={{
+                     backgroundColor: '#ab47bc',
+                     borderRadius: 3,
+                     boxShadow: 10,
+                     overflow: 'hidden',
+                     marginBlockStart: "10px",
+                     }}>
+                  <Outlet />
+                 </Box >
+            </Container>
         </>
     );
 }

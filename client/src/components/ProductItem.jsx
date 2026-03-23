@@ -15,7 +15,7 @@ function ProductItem({ product }) {
                 <CardContent>
                     <Typography variant="h6" gutterBottom>
                         {product.productName}
-                    </Typography>
+                    </Typography> 
                     <RatingSummary ratings={product?.ratings} />
                     <Typography variant="subtitle1" fontWeight="bold" marginTop={1}>
                         {product.price} kr

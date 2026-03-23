@@ -51,7 +51,7 @@ function Home() {
                             Hem
                         </Link>
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{ display: 'flex', gap: 1, }}>
                         <Button color="inherit" component={Link} to="/products/new" sx={{ color: 'white' }}>
                             Skapa produkt
                         </Button>
@@ -90,7 +90,7 @@ function Home() {
             </Box>
 
             {/* Rest of the page */}
-            <Container maxWidth="xl">
+            <Box sx={{ textAlign: 'center', padding: '20px' }}>
                 <Typography variant="h5" fontWeight="bold" marginBottom={2} marginTop={4} sx={{ color: '#4a148c' }}>
                     Kategorier
                 </Typography>
@@ -99,8 +99,8 @@ function Home() {
                 <Typography variant="h5" fontWeight="bold" marginTop={4} marginBottom={2} sx={{ color: '#4a148c' }}>
                     Alla produkter
                 </Typography>
-                <ProductList products={products} onAddToCart={handleAddToCart} />
-            </Container>
+            </Box>
+            <ProductList products={products} onAddToCart={handleAddToCart} />
         </>
     );
 }
