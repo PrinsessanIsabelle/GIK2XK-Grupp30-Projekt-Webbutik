@@ -19,18 +19,16 @@ function ProductDetail() {
         });
       }, [id]);
     
-      function onRatingAdd(rating) {
-        addRating(product.id, rating)
-        .then((rating) => getOne(id))
-        .then((product) => setProduct(product));
-      }
+      function onRatingAdd() {
+    getOne(id).then((product) => setProduct(product));
+    }   
     
     return ( 
         <div>
             <ProductItemLarge product={product}/>
             <Button onClick={() => navigate(-1)}>Tillbaka</Button>
             <Button onClick={() => navigate(`/products/${product?.id}/edit`)}>Ändra</Button>
-            <RatingForm onSave={onRatingAdd} />
+            <RatingForm productId={id} onSave={onRatingAdd}/>
             {product?.ratings && product.ratings.map((rating, i) =>(
                 <Rating key={`rating_${i}`} rating={rating} />
             ))}

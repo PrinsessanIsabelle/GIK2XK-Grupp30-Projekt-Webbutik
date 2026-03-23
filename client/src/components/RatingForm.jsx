@@ -7,15 +7,15 @@ function RatingForm({ productId, onSave }) {
     const [error, setError] = useState(null);
 
     const handleSubmit = async () => {
-        try {
-            const result = await createRating(productId, rating.rating, rating.body);
-            onSave(result); // notify parent component that a new rating was saved
-            setRating({ rating: '', body: '' }); // clear the form
-            setError(null);
-        } catch (err) {
-            setError(err.message);
-        }
-    };
+    try {
+        await createRating(productId, rating.rating, rating.body);
+        onSave();
+        setRating({ rating: '', body: '' });
+        setError(null);
+    } catch (err) {
+        setError(err.message);
+    }
+};
 
     return ( 
         <form>
