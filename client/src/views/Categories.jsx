@@ -20,7 +20,7 @@ function Categories() {
 
     return (
         <Box>
-            <Box sx={{ textAlign: 'center', mb: 3 }}>
+            <Box sx={{ textAlign: 'center', mb: 3, }}>
                 <Typography variant="h5" fontWeight="bold">
                     Kategori: {name}
                 </Typography>

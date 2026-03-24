@@ -43,7 +43,7 @@ function ProductDetail() {
                 </div>
             </div>
             <div style={{ gridColumn: '2', gridRow: '2' }}>
-                <RatingForm productId={id} onSave={onRatingAdd}/>
+                <RatingForm  productId={id} onSave={onRatingAdd} />
                 <RatingSummary ratings={product?.ratings} />
                 <Box sx={{ marginTop: 3 }}>
                     {product?.ratings && product.ratings.map((rating, i) => (

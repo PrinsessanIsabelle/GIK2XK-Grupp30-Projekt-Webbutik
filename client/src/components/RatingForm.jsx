@@ -22,6 +22,7 @@ function RatingForm({ productId, onSave }) {
             {error && <Typography color="error">{error}</Typography>}
             <div>
                 <TextField
+                sx={{backgroundColor: 'white', borderRadius: '4px', width: '100%'}}
                     value={rating.rating}
                     onChange={(e) => setRating({ ...rating, rating: e.target.value })}
                     label="Rating"
@@ -29,6 +30,7 @@ function RatingForm({ productId, onSave }) {
             </div>
             <div>
                 <TextField
+                sx={{backgroundColor: 'white', borderRadius: '4px', width: '100%'}}
                     multiline minRows={3}
                     value={rating.body}
                     onChange={(e) => setRating({ ...rating, body: e.target.value })}
