@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getByCategory } from '../services/ProductService';
 import ProductList from '../components/ProductList';
 import { useCart } from '../context/CartContext';
+import { Box, Typography } from '@mui/material';
 
 function Categories() {
     const { name } = useParams();
@@ -18,10 +19,14 @@ function Categories() {
     };
 
     return (
-        <div>
-            <h3>Kategori: {name}</h3>
+        <Box>
+            <Box sx={{ textAlign: 'center', mb: 3 }}>
+                <Typography variant="h5" fontWeight="bold">
+                    Kategori: {name}
+                </Typography>
+            </Box>
             <ProductList products={products} onAddToCart={handleAddToCart} />
-        </div>
+        </Box>
     );
 }
 export default Categories;
