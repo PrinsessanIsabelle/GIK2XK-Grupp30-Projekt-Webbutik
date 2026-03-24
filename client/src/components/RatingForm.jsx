@@ -17,27 +17,27 @@ function RatingForm({ productId, onSave }) {
     }
 };
 
-    return ( 
-        <form>
+    return (
+        <form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {error && <Typography color="error">{error}</Typography>}
             <div>
-                <TextField 
+                <TextField
                     value={rating.rating}
-                    onChange={(e) => setRating({ ...rating, rating: e.target.value })}           
+                    onChange={(e) => setRating({ ...rating, rating: e.target.value })}
                     label="Rating"
                 />
             </div>
             <div>
-                <TextField 
+                <TextField
                     multiline minRows={3}
                     value={rating.body}
-                    onChange={(e) => setRating({ ...rating, body: e.target.value })} 
+                    onChange={(e) => setRating({ ...rating, body: e.target.value })}
                     label="Review"
                     name="body"
                     id="body"
                 />
             </div>
-            <Button onClick={handleSubmit}>Skicka rating</Button>
+            <Button onClick={handleSubmit} sx={{ backgroundColor: '#000', color: 'white', fontWeight: 'bold', '&:hover': { backgroundColor: '#333' } }}>Skicka rating</Button>
         </form>
     );
 }

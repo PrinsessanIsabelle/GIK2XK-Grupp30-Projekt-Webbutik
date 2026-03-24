@@ -25,7 +25,7 @@ function ProductList({ products = [], onAddToCart }) {
         }}>
             {products?.length > 0 ? (
                 products.map((product) => (
-                    <Card key={product.id} sx={{ height: '100%', display: 'flex', flexDirection: 'column', '&:hover': { boxShadow: 6 } }}>
+                    <Card key={product.id} sx={{ height: '100%', display: 'flex', flexDirection: 'column', '&:hover': { boxShadow: 6 }, border: '2px solid black', borderRadius: '8px' }}>
                         <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                             <CardMedia
                                 component="img"
@@ -51,6 +51,7 @@ function ProductList({ products = [], onAddToCart }) {
                                 size="small"
                                 variant="contained"
                                 onClick={(event) => handleAddToCartClick(event, product)}
+                                sx={{ backgroundColor: '#b2ff59', color: '#000', fontWeight: 'bold', '&:hover': { backgroundColor: '#9cef5d' } }}
                             >
                                 Lägg i kundvagn
                             </Button>
