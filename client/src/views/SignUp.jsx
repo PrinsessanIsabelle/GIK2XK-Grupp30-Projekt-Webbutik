@@ -37,7 +37,7 @@ function SignUp() {
     };
 
     return (
-        <Box sx={{ maxWidth: 400, margin: '100px auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ maxWidth: 400, margin: '100px auto', display: 'flex', flexDirection: 'column', gap: 2,  }}>
             <Typography variant="h4">Skapa konto</Typography>
             {error && <Typography color="error">{error}</Typography>}
             <TextField
@@ -45,24 +45,44 @@ function SignUp() {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
+                sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '4px',
+                    border: '1px solid #060505',
+                }}
             />
             <TextField
                 label="Användarnamn"
                 name="username"
                 value={form.username}
                 onChange={handleChange}
+                sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '4px',
+                    border: '1px solid #060505',
+                }}
             />
             <TextField
                 label="Förnamn"
                 name="firstName"
                 value={form.firstName}
                 onChange={handleChange}
+                sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '4px',
+                    border: '1px solid #060505',
+                }}
             />
             <TextField
                 label="Efternamn"
                 name="lastName"
                 value={form.lastName}
                 onChange={handleChange}
+                sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '4px',
+                    border: '1px solid #060505',
+                }}
             />
             <TextField
                 label="Lösenord"
@@ -70,8 +90,22 @@ function SignUp() {
                 type="password"
                 value={form.password}
                 onChange={handleChange}
+                sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '4px',
+                    border: '1px solid #060505',
+                }}
             />
-            <Button variant="contained" onClick={handleSubmit}>
+            <Button variant="contained" onClick={handleSubmit}
+               sx={{
+                    backgroundColor: '#b2ff59',
+                    color: '#000',
+                    fontWeight: 'bold',
+
+                    
+                    '&:hover': { backgroundColor: '#9cef5d' }
+                }}>
+            
                 Skapa konto
             </Button>
             <Typography variant="body2">
