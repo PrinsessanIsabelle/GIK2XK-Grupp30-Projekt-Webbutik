@@ -68,23 +68,28 @@ function ProductEdit() {
      }
 
     return ( 
-        <form>
+        <form
+         style={{
+    display: 'grid',
+    gap: '20px',
+    padding: '20px'
+  }}>
 
             <div> 
-                <TextField onChange={onChange} value={product.productName} name="productName" id="productName" label="ProduktNamn"/>
+                <TextField onChange={onChange} value={product.productName} name="productName" id="productName" label="ProduktNamn" sx={{backgroundColor: 'white', borderRadius: '4px', width: '100%', border: '1px solid #060505',}}  />
             </div>
             <div>
-                <TextField onChange={onChange} value={product.price} name="price" id="price" label="Pris"/>
+                <TextField onChange={onChange} value={product.price} name="price" id="price" label="Pris" sx={{backgroundColor: 'white', borderRadius: '4px', width: '100%', border: '1px solid #060505',}}/>
             </div>  
             <div>  
-                <TextField onChange={onChange} value={product.description}t multiline minRows={5} name="description" id="description" label="Beskrivning"/>
+                <TextField onChange={onChange} value={product.description}t multiline minRows={5} name="description" id="description" label="Beskrivning" sx={{backgroundColor: 'white', borderRadius: '4px', width: '100%', border: '1px solid #060505',}}/>
             </div>
             <div>
-                <TextField onChange={onChange} name="imageUrl" id="imageUrl" label="BildUrl"/>
+                <TextField onChange={onChange} name="imageUrl" id="imageUrl" label="BildUrl" sx={{backgroundColor: 'white', borderRadius: '4px', width: '100%', border: '1px solid #060505',}}/>
             </div>
             <div>
                 {product?.categories?.length > 0 &&
-                    product.categories.map((category) => <Chip onDelete={() => onCategoryDelete(category)} key={category} label={category}/>)}
+                    product.categories.map((category) => <Chip onDelete={() => onCategoryDelete(category)} key={category} label={category}  />)}
             </div>
             <div>
                 <CategoyField onSave={onCategoryAdd} />
