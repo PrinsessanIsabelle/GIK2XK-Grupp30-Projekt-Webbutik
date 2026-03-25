@@ -8,7 +8,7 @@ import RatingSummary from '../components/RatingSummary';
 import { getOne, addRating } from "../services/ProductService";
 import { useEffect, useState } from "react";
 import { useCart } from '../context/CartContext';
-
+/* Komponent för att vyn, visar detaljer om ett specifikt produkt */
 function ProductDetail() {
     const [product, setProduct] = useState(null);
     const { id } = useParams();
@@ -30,7 +30,7 @@ function ProductDetail() {
                 if (!product) return;
                 await addToCart(product, 1);
         };
-    
+    /* Detaljer om produkten */
     return (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto auto auto', gap: '20px', padding: '20px' }}>
             <img src={product?.imageUrl} style={{ gridColumn: '1 / -1', gridRow: '1', width: '100%', height: '600px', objectFit: 'cover', borderRadius: '8px', border: '2px solid black' }} />

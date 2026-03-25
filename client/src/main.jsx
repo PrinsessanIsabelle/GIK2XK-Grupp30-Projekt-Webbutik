@@ -1,3 +1,5 @@
+
+/* importerar bibliotek och nödvändiga komponenter */
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { AuthProvider } from './context/AuthContext';
@@ -17,6 +19,7 @@ import Payment from './views/Payment.jsx'
 import Categories from './views/Categories.jsx';
 import { CssBaseline } from '@mui/material';
 
+/* Definerar alla rutter för applikationen. Hanterar om du vill tillägga sidor */
 const router = createBrowserRouter([
   { path: '/', element: <App />,
     children: [
@@ -34,6 +37,7 @@ const router = createBrowserRouter([
     ]
   }
 ]);
+/* startar applikationen */
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>

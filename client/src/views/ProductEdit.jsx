@@ -6,12 +6,14 @@ import { TextField } from "@mui/material";
 import { Chip } from "@mui/material"
 import CategoyField from "../components/CategoryField";
 
+/* Komponent för att redigera en produkt */
 function ProductEdit() {
     const emptyProduct = {id: 0, productName: '', price: '', imageUrl: '', description: '', categories: [], userId: 1}
     const [product, setProduct] = useState(emptyProduct);
     const { id } = useParams();
     const navigate = useNavigate();
 
+    
     useEffect(() => {
         if (id) {
             getOne(id).then((product) => setProduct(product));

@@ -14,6 +14,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
+/* Komponent för att visa kundvagnen */
 function Cart() {
     const { cart, isLoading, error, updateAmount, removeFromCart, clearAll, checkout } = useCart();
 
@@ -46,6 +47,7 @@ function Cart() {
                 <Typography>Laddar kundvagn...</Typography>
             ) : cart?.rows?.length ? (
                 <>
+                {/* Visar varor i kundvagnen */}
                     <List>
                         {cart.rows.map((row) => (
                             <ListItem
@@ -65,7 +67,14 @@ function Cart() {
                                     label="Antal"
                                     type="number"
                                     size="small "
-                                    sx={{ width: 80, mr: 5, backgroundColor: 'white',borderRadius: '4px',border: '1px solid #060505', }}
+                                    sx={{ 
+                                    width: 80,
+                                    mr: 5,
+                                    backgroundColor: 'white',
+                                    borderRadius:'4px',
+                                    border: '1px solid #060505'
+                                 }}
+
                                     value={row.amount}
                                     onChange={(event) => handleAmountChange(row.id, event.target.value)}
                                     
@@ -74,13 +83,21 @@ function Cart() {
                         ))}
                     </List>
 
+                    {/* Visar totalsumma och antal varor */}
                     <Stack spacing={1} mt={2} >
                         <Typography variant="h6" >Antal varor: {cart.totalAmount}</Typography>
                         <Typography variant="h6">Total: {cart.totalPrice} kr</Typography>
                     </Stack>
 
+                    {/* Visar knappar för att tömma kundvagnen och gå till checkout */}
                     <Stack direction="row" spacing={2} mt={3}>
-                        <Button variant="outlined" color="error" onClick={clearAll}  sx={{ backgroundColor: '#000', color: 'white', fontWeight: 'bold', '&:hover': { backgroundColor: '#333' } }}>
+                        <Button variant="outlined" color="error" onClick={clearAll}
+                          sx={{
+                             backgroundColor: '#000',
+                             color: 'white',
+                             fontWeight: 'bold',
+
+                            '&:hover': { backgroundColor: '#333' } }}>
                             Töm kundvagn
                         </Button>
                         <Button variant="contained" onClick={handleCheckout}
@@ -89,7 +106,6 @@ function Cart() {
                                  color: '#000',
                                  fontWeight: 'bold',
 
-                    
                                  '&:hover': { backgroundColor: '#9cef5d' }
                                 }}>
                             Checkout
@@ -97,6 +113,7 @@ function Cart() {
                     </Stack>
                 </>
 ) : (
+    /* Visar meddelande när kundvagnen är tom */
     <Stack spacing={2} mt={2} alignItems="flex-start">
         <Typography>Din kundvagn är tom.</Typography>
         <Button
@@ -107,6 +124,7 @@ function Cart() {
                 backgroundColor: '#b2ff59',
                 color: '#000',
                 fontWeight: 'bold',
+
                 '&:hover': { backgroundColor: '#9cef5d' }
             }}
         >
