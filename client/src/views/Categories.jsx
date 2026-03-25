@@ -5,6 +5,7 @@ import ProductList from '../components/ProductList';
 import { useCart } from '../context/CartContext';
 import { Box, Typography } from '@mui/material';
 
+/* Komponent för att visa produkter efter kategori */
 function Categories() {
     const { name } = useParams();
     const [products, setProducts] = useState([]);
@@ -18,6 +19,7 @@ function Categories() {
         await addToCart(product, 1);
     };
 
+    /* Visar produkter i vald kategori */
     return (
         <Box>
             <Box sx={{ textAlign: 'center', mb: 3, }}>

@@ -1,5 +1,7 @@
 import axios from './api';
 
+
+/* Hämtar alla kategorier från API och loggar fel vid misslyckat anrop. */
 export async function getAll() {
     try {
     const response = await axios.get('/categories');

@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+/* Komponent för att visa inloggningsformulär */
 function Login() {
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -25,9 +26,17 @@ function Login() {
 };
 
     return (
-        <Box sx={{ maxWidth: 400, margin: '100px auto', display: 'flex', flexDirection: 'column', gap: 2, }}>
+        /* Inloggningsformulär */
+        <Box sx={{
+             maxWidth: 400,
+             margin: '100px auto',
+             display: 'flex',
+             flexDirection: 'column',
+             gap: 2, }}>
+
             <Typography variant="h4">Logga in</Typography>
             {error && <Typography color="error">{error}</Typography>}
+            {/* e-post */}
             <TextField
                 label="E-post"
                 value={email}
@@ -38,6 +47,7 @@ function Login() {
                     border: '1px solid #060505',
                 }}
             />
+            {/* lösenord */}
             <TextField
                 label="Lösenord"
                 type="password"
@@ -49,6 +59,7 @@ function Login() {
                     border: '1px solid #060505',
                 }}
             />
+                {/* logga in knapp */}
             <Button variant="contained" onClick={handleLogin}
                     sx={{
                     backgroundColor: '#b2ff59',

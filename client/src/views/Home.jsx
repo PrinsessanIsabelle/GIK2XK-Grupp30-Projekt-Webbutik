@@ -7,7 +7,7 @@ import { Box, Typography, Container, Toolbar, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { logoutUser } from '../services/authService';
-
+/* Komponent för att visa huvudsidan */
 function Home() {
     const [products, setProducts] = useState([]);
     const { addToCart, cart } = useCart();
@@ -38,13 +38,13 @@ function Home() {
 
     return (
         <>
-            {/* Hero banner with integrated navbar */}
+            {/* navigation */}
             <Box sx={{
                 background: 'linear-gradient(135deg, #1b5e20, #4a148c)',
                 color: 'white',
                 paddingBottom: '60px',
             }}>
-                {/* Navbar inside banner */}
+                
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Typography variant="h6">
                         <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
@@ -78,7 +78,7 @@ function Home() {
                     </Box>
                 </Toolbar>
 
-                {/* Hero text */}
+                {/* rubriker */}
                 <Box sx={{ textAlign: 'center', padding: '40px 20px 20px' }}>
                     <Typography variant="h3" fontWeight="bold" gutterBottom>
                         🧪 Whimsical Potions
@@ -89,7 +89,7 @@ function Home() {
                 </Box>
             </Box>
 
-            {/* Rest of the page */}
+            {/* resterande innehåll som kategorier och produkter */}
             <Box sx={{ textAlign: 'center', padding: '20px' }}>
                 <Typography variant="h5" fontWeight="bold" marginBottom={2} marginTop={4} sx={{ color: '#4a148c' }}>
                     Kategorier

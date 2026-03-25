@@ -6,6 +6,7 @@ import { logoutUser } from './services/authService';
 import Navbar from './components/Navbar';
 import { useLocation } from 'react-router-dom';
 
+/* App-komponenten för att hantera applikationens layout */
 function App() {
   const { user, logout } = useAuth();
   const { cart } = useCart();
