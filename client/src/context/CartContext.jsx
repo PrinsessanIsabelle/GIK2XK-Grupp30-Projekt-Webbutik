@@ -1,3 +1,6 @@
+// sköter delat UI-tillstånd i frontend 
+// (vad appen “minns” just nu och hur komponenter uppdateras).
+
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { useAuth } from './AuthContext';
 import {
