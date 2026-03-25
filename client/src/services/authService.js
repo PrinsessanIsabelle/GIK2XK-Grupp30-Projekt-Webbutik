@@ -1,3 +1,4 @@
+/* Funktion för att logga in en användare, post till auth/login returnerar en om användaren är inloggad eller inte */
 export async function loginUser(email, password) {
     const response = await fetch('http://localhost:5000/auth/login', { 
         method: 'POST',
@@ -12,7 +13,7 @@ export async function loginUser(email, password) {
     }
     return data; 
 }
-
+/* Funktion för att logga ut en användare, post till auth/logout */
 export async function logoutUser() {
     const response = await fetch('http://localhost:5000/auth/logout', {
         method: 'POST',
@@ -24,7 +25,7 @@ export async function logoutUser() {
     }
     return data;
 }
-
+/* Funktion för att registrera en ny användare, post till users */
 export async function signUpUser(userData) {
     const response = await fetch('http://localhost:5000/users', {
         method: 'POST',
