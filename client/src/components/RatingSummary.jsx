@@ -1,5 +1,6 @@
 import { Typography, Box } from '@mui/material';
 
+// Beräknar och visar sammanfattat snittbetyg för en produkt
 function RatingSummary({ ratings }) {
     if (!ratings || ratings.length === 0) {
         return (

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import RatingSummary from '../components/RatingSummary';
 
+// Produktkort för listvyer. Visar produktbild, namn, pris och genomsnittsbetyg. Klickbar för att se detaljer
 function ProductItem({ product }) {
     return (
         <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>

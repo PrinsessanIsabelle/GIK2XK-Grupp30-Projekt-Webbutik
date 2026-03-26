@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { logoutUser } from '../services/authService';
 import { useCart } from '../context/CartContext';
 
+// Global navigationsfält som anpassas efter inloggad användare
 function Navbar() {
     const { user, logout } = useAuth();
     const { cart } = useCart(); // ✅ destructure cart

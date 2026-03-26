@@ -2,6 +2,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { createRating } from "../services/ratingService";
 
+// Formulär för att skapa en ny produktrecension
 function RatingForm({ productId, onSave }) {
     const [rating, setRating] = useState({ rating: '', body: '' });
     const [error, setError] = useState(null);

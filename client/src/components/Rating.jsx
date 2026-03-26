@@ -1,5 +1,6 @@
 import { Card, CardContent, Typography, Box } from '@mui/material';
 
+// Visar en recension med användare, datum, betyg och text
 function Rating({ rating }) {
     return (
         <Card sx={{ marginBottom: 2, borderRadius: 2, boxShadow: 2 }}>

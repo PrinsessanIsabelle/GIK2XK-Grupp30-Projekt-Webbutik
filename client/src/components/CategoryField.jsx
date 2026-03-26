@@ -1,5 +1,7 @@
 import {TextField, Button, Box } from "@mui/material";
 import { useState } from "react";
+
+// Inmatningsfält för att lägga till en eller flera kategorier
 function CategoryField({ onSave }) {  
     const [categoryString, setCategoryString] = useState('');
 return (

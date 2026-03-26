@@ -3,10 +3,12 @@ import { getAll } from '../services/CategoryService';
 import { Box, Chip, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+// Hämtar och visar alla kategorier som navigerbara chips
 function CategoryList() {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
+        // Faller tillbaka till tom array om api svaret saknas
         getAll().then((response) => setCategories(response || []));
     }, []);
 

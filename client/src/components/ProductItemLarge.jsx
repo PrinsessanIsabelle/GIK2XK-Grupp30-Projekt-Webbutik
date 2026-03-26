@@ -1,8 +1,10 @@
 import { purple } from "@mui/material/colors";
 import Category from "./Category";
 
+// Detaljvy för en enskild produkt med tillhörande kategorier
 function ProductItemLarge({ product }) {
 
+    // Enkel fallback under inläsning
     if (!product) return <p>Laddar...</p>;
     return (
         <div style={{ padding: '20px' }}>

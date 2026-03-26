@@ -1,6 +1,7 @@
 import { Chip } from "@mui/material";
 import { Link } from "react-router-dom";
 
+// Visar en klickbar kategori-chip som leder till kategorins produktsida
 function Category( {text} ) {
    
     return (
